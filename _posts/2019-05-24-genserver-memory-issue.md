@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Your GenServer is Harbouring Old Memories
-subtitle: Your GenServer is Harbouring Old Memories
+subtitle: Help it let them go
 ---
 
 I was recently working on a project that might feel familiar to some:
