@@ -4,6 +4,8 @@ title: Your GenServer is Harbouring Old Memories
 subtitle: Help it let them go
 ---
 
+TL;DR: GenServers will weirdly hold onto memory when doing work, but not if you do the work in a seperate process.
+
 I was recently working on a project that might feel familiar to some:
 
 - Some data needed to be pulled from an external source
