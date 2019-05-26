@@ -111,7 +111,7 @@ iex(2)> :observer.start()
 
 If installed correctly, a GUI should open that basically serves as a System/Activty Monitor, but for the running Elixir process. Mine looks like this:
 
-![Observer GUI](/img/observer_0.png)
+![Observer GUI](/img/2019-05-24-genserver-memory-issue/observer_0.png)
 
 You can see the current memory usage in the top-right corner. I personally see a value that's roughly ~25MB, but yours may differ. 
 
