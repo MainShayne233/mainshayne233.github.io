@@ -13,24 +13,32 @@ I was recently working on a project that might feel familiar to some:
 
 For those familiar with Erlang/Elixir, you'll know that either language can do this in its sleep.
 
-The application I created to perform this task was a simple Elixir app that ran as a worker on a Heroku Hobby Dyno, which has a ~0.5GB memory limit.
-
-Upon initially creating and deploying the application, everything seemed fine. However, after a few hours of running, the Heroku dashboard indicated that the application was using progressivly
-more and more memory, and eventually it started choking as it passed the 0.5GB mark.
-
 Now I am not here to describe how to write memory-effecient code, or to solve the problem stated above in the absolute best way possible. I am here to tell you about the method(s)
 I chose, the strange memory issue I was having, how I diganosed the issue, and how I solved the issue.
 
-Let's start w/ some code that roughly simulates the implementation I went with:
-
 NOTE: If you are not familiar with GenServer's, you may want to take a look at the [elixir-lang intro to them](https://elixir-lang.org/getting-started/mix-otp/genserver.html).
 
+I decided to write a simple Elixir application that would start a handful of GenServers. Each GenServer was given a task that it would run periodically
+on some specified interval. The GenServers simply ran a task that would fetch, process, and dump some data, then just wait to run the task again. Basically,
+the application was a glorified [cron job](https://en.wikipedia.org/wiki/Cron) runner.
+
+Though the tasks being ran would use a considerable amount of memory (mostly dealing with large binary string values), the processed data would eventually be
+dumped into a database, so in theory, when a task finished, that memory could be [garbage collected](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science))
+
+Upon initial implementation and mild benchmarking, it seemed like a [Heroku Hobby Dyno](https://devcenter.heroku.com/articles/dyno-types) was all that was needed to run it given
+that it never used much more than ~300MB of memory at any given time, and close to none when idle (i.e. when not running any tasks).
+
+This theory held true after initially deploying the app and having it successfully run its tasks a few times. However, after a few hours, the Heroku metrics page indicated that
+the application was using more than its alloted ~512MB of memory, and would continue using a substantial amount of memory even when at idle. Yikes! If I wanted to run this application
+for more than a few days at a time without rebooting it, I would need to upgrade to a more expesnvie Heroku Dyno type.
+
+So what's going on here? Let's start w/ some code that roughly simulates the implementation I went with:
 
 ```elixir
 defmodule Worker do
   use GenServer
   
-  @one_hour_in_milliseconds 1000 * 60 * 60
+  @five_seconds_in_milliseconds 1000 * 5
 
   def start_link do
     GenServer.start_link(__MODULE__, nil, name: :my_worker)
@@ -43,11 +51,12 @@ defmodule Worker do
 
   def handle_info(:fetch_process_and_dump_data, nil) do
     :ok = fetch_process_and_dump_data()
-    Process.send_after(self(), :fetch_process_and_dump_data, @one_hour_in_milliseconds)
+    Process.send_after(self(), :fetch_process_and_dump_data, @five_seconds_in_milliseconds)
     {:noreply, nil}
   end
 
   defp fetch_process_and_dump_data do
+    IO.puts("Starting work!")
     fetch_data()
     |> process_data()
     |> dump_data()
@@ -79,31 +88,30 @@ defmodule Worker do
 end
 ```
 
-Here we are defining a simple GenServer module. When an instance of this GenServer is started, it will eventually run a function called `fetch_process_and_dump_data/0` that is simulating fetching some data, processing that data, and dumping it somewhere. After completing this work, the GenServer will schedule itself to do the same work in ~1 hour.
+Here we are defining a simple GenServer module. When an instance of this GenServer is started, it will eventually run the `fetch_process_and_dump_data/0` function that is simulating fetching some data, processing that data, and dumping it somewhere. After completing this work, the GenServer will schedule itself to do the same work in 5 seconds.
 
 To simulate fetching some data, we're just creating a large string that is made up of random numbers seperated by `_`. To simulate processing this data, we simply parse out all the numbers and sum them up. To simulate dumping this data, we simply print the result to stdout.
 
-Notice how, beyond matching on the `:ok` response, we do not care about any of the data the function was dealing with. In theory, all of the memory allocated for this data should be garbage collected upon the function finishing. However, if we run this code, we can see that this is not exactly the case.
+Notice how, beyond matching on the `:ok` response, we do not care about the return value or any of the data the function was dealing with. In theory, all of the memory allocated while running this task should be garbage collected upon the function finishing. However, if we run this code, we can see that this is not what is happening. Feel free to follow along if have Elixir installed and a terminal to run the code in.
 
-You can run code this simply by starting an `iex>` session and copy and pasting the code into the shell. Once the code is compiled in the shell, you can start a worker via:
+Let's run this code in an [`iex>`](https://hexdocs.pm/iex/IEx.html) session and use [Observer](https://www.oreilly.com/library/view/elixir-cookbook/9781784397517/ch01s07.html) to inspect the memory usage. 
 
-```elixir
-iex(2)> Worker.start_link()
-{:ok, #PID<0.157.0>}
+Will start an `iex>` session by running the following in a terminal:
+
+```sh
+$ iex
 ```
 
-About a second after starting, the worker will call `fetch_process_and_dump_data/0`, and begin its work. Once it's complete, you'll see output like `"Processed data: 423423543"`, though your number will most likely differ. If you wait ~1 hour, the worker will do this same work again.
-
-So you might be thinking, that worked fine, what's the problem? We can see the problem if we observe what's going on at the memory level. Let's do that.
-
-Let's kill the current `iex>` session and start a new one. Again, copy and paste the code into the shell. Before starting the worker again, let's start the erlang observer via:
+Once started, we'll start the Observer GUI:
 
 ```elixir
 iex(2)> :observer.start()
 :ok
 ```
 
-If installed correctly, a GUI should open that basically serves as a System/Activty Monitor, but for the running Elixir process.
+If installed correctly, a GUI should open that basically serves as a System/Activty Monitor, but for the running Elixir process. Mine looks like this:
+
+![Observer GUI](./img/observer_0.png)
 
 You can see the current memory usage in the top-right corner. I personally see a value that's roughly ~25MB, but yours may differ. 
 
