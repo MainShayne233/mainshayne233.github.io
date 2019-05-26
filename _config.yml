@@ -23,6 +23,7 @@ description: A virtual proof that name is awesome!
 
 # List of links in the navigation bar
 navbar-links:
+  Home: "https://mainshayne233.github.io"
   About Me: "aboutme"
   GitHub: "https://github.com/MainShayne233"
 
