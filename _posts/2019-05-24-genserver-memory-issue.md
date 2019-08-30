@@ -183,7 +183,6 @@ defmodule Worker do
       |> Task.async()
       |> Task.await(100_000)
 
-    fetch_process_and_dump_data()
     Process.send_after(self(), :fetch_process_and_dump_data, @interval)
     {:noreply, nil}
   end
