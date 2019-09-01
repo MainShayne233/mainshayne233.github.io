@@ -39,7 +39,7 @@ So what's going on here? Let's start w/ some code that roughly simulates the imp
 ```elixir
 defmodule Worker do
   use GenServer
-  
+
   @interval 1000 * 30
 
   def start_link do
