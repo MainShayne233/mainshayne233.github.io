@@ -137,7 +137,7 @@ iex(2)> Worker.start_link()
 {:ok, #PID<0.157.0>}
 ```
 
-Once started, the worker will beging running its task. As the worker runs, you'll see the memory usage climb. When I've run this, the memory usage gets to be about ~500MB.
+Once started, the worker will begin running its task. As the worker runs, you'll see the memory usage climb. When I've run this, the memory usage gets to be about ~500MB.
 
 ![Observer While Task Runs](/img/2019-05-24-genserver-memory-issue/observer_1.png)
 
