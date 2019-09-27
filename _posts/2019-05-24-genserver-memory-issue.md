@@ -96,7 +96,7 @@ To simulate fetching some data, we're just creating a large string that is made 
 
 Notice how, beyond matching on the `:ok` response, we do not care about the return value or any of the data the function was dealing with. In theory, all of the memory allocated while running this task should be garbage collected upon the function finishing. However, if we run this code, we can see that this is not what is happening. Feel free to follow along if you have Elixir installed and a terminal to run the code in.
 
-Let's run this code in an [`iex>`](https://hexdocs.pm/iex/IEx.html) session and use [Observer](https://www.oreilly.com/library/view/elixir-cookbook/9781784397517/ch01s07.html) to inspect the memory usage. 
+Let's run this code in an [`iex>`](https://hexdocs.pm/iex/IEx.html) session and use [Observer](https://www.oreilly.com/library/view/elixir-cookbook/9781784397517/ch01s07.html) to inspect the memory usage.
 
 We'll start an `iex>` session by running the following in a terminal:
 
@@ -115,7 +115,7 @@ If installed correctly, a GUI should open that basically serves as a System/Acti
 
 ![Observer GUI](/img/2019-05-24-genserver-memory-issue/observer_0.png)
 
-You can see the current memory usage in the top-right corner. I personally see a value that's roughly ~24MB, but yours may differ. 
+You can see the current memory usage in the top-right corner. I personally see a value that's roughly ~24MB, but yours may differ.
 
 We can now copy and paste the Elixir code defining the `Worker` module directly into `iex>` and hit enter to compile it:
 
