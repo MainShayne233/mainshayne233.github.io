@@ -1,10 +1,8 @@
 ---
 layout: page
-title: Accomplishments
-subtitle:
+title: Experiences
+subtitle: I've gotten to work on some neat things
 ---
-
-Here are some neat things I've gotten to do, or got to be a part of:
 
 ## Project: FeatureFlag
 

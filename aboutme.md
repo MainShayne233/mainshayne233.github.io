@@ -14,4 +14,4 @@ I enjoy fermented vegetables, rollerblading, communism, and many other things.
 
 I'm excited about software architecture, programming languages, resilient systems, and kinda anything under the software sun.
 
-Check out some things I've gotten to work on [here](https://mainshayne233.github.io/accomplishments/).
+Check out some things I've gotten to work on [here](https://mainshayne233.github.io/experiences/).
