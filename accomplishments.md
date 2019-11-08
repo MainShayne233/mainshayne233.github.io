@@ -1,12 +1,14 @@
 ---
 layout: page
 title: Accomplishments
-subtitle: 
+subtitle:
 ---
 
 Here are some neat things I've gotten to do, or got to be a part of:
 
-### Project: FeatureFlag - An Elixir macro library for altering function behaviors at runtime
+## Project: FeatureFlag
+
+### An Elixir macro library for altering function behaviors at runtime
 
 [GitHub Repo](https://github.com/MainShayne233/feature_flag)
 
@@ -19,7 +21,9 @@ This came out of solving a problem at work:
 `feature_flag` solved this by allowing us to dictate the behavior of a function using a configuration value. Elixir configuration values can be mutated at runtie, so if we needed to switch back to the old behavior, it was as simple as connecting to the app and executing some code to modify that configuration value. Also, `feature_flag` allowed all of this while still have you define your function mostly like a normal function, just with multiple behaviors.
 
 
-### System Building: A multi-service Elixir system for accurate shipping cost estimations 
+## System Building: Ship
+
+### A multi-service Elixir system for accurate shipping cost estimations
 
 "...FedEx called. They want us to stop DDoS'ing them."
 
@@ -36,7 +40,9 @@ I don't necessarily think attacking other peoples' systems is something to be pr
 tl;dir: built a system that polled FedEx's API for data, ended up accidentally DDoS'ing FedEx with a tiny Elixir app running on a Heroku hobby dyno.
 
 
-### Contribution: Gleam - A statically typed programming language for the BEAM!
+## Contribution: Gleam
+
+### A statically typed programming language for the BEAM!
 
 [GitHub Repo](https://github.com/gleam-lang/gleam)
 
