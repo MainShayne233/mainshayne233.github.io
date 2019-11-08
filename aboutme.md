@@ -4,9 +4,7 @@ title: Howdy!
 subtitle: Pleased to meet you
 ---
 
-Hello! My name is Shayne Tremblay.
-
-I consider myself a programmer, technologist, and someone trying to be a good citizen.
+My name is Shayne Tremblay, and I think of myself as a programmer, technologist, and someone trying to be a good citizen.
 
 I want to live in a world where software does more good than harm.
 
