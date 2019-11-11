@@ -1,15 +1,27 @@
 ---
 layout: page
-title: Howdy!
+title: MainShayne233
 subtitle: Pleased to meet you
 ---
 
-My name is Shayne Tremblay, and I think of myself as a programmer, technologist, and someone trying to be a good citizen.
+### Howdy!
+
+My name is Shayne Tremblay, and I think of myself as a programmer, technologist, and a good citizen in training.
+
+### A lil about me
 
 I want to live in a world where software does more good than harm.
 
 I enjoy fermented vegetables, rollerblading, communism, and many other things.
 
-I'm excited about software architecture, programming languages, resilient systems, and kinda anything under the software sun.
+I'm excited about software architecture, language design, functional programming, static typing, resilient systems, and kinda anything under the software sun.
 
-Check out some things I've gotten to work on [here](https://mainshayne233.github.io/experiences/).
+### Go deeper
+
+If so inclined, check out my:
+
+- [Blog](/blog)
+- [Experiences](/experiences)
+- [GitHub](https://github.com/MainShayne233)
+
+Don't be afraid to reach out! I'm always happy to chat. :-)
