@@ -1,14 +1,16 @@
 ---
 layout: page
 title: MainShayne233
-subtitle: Pleased to meet you
+subtitle: Nice to meet you
 ---
 
 ### Howdy!
 
-My name is Shayne Tremblay, and I think of myself as a programmer, technologist, and a good citizen in training.
+My name is Shayne Tremblay.
 
 ### A lil about me
+
+I think of myself as a programmer, technologist, and a good citizen in training.
 
 I want to live in a world where software does more good than harm.
 
