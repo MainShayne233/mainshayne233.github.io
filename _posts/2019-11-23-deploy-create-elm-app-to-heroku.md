@@ -121,16 +121,32 @@ The comments in the script mostly describe what is going on, but at a high level
 
 It's not necessary to understand in order to use the script, but one of the more interesting parts of this script is the `git push` step which is utilizing `git subtree` in order to push the `build` directory to Heroku as the project's root. I don't completely understand what it's doing, but it's been working well for me :p.
 
-Once this script has run, your app should be deployed!
+Add the script to your project like so:
 
-You can open the app up in your browser by running:
+```sh
+# in ./MyApp
+mkdir bin
+<user-whatever-method-to-put-script-at bin/deploy>
+chmod +x ./bin/deploy
+git add ./bin/deploy
+git commit -m 'Add deploy script'
+```
+
+Once the deploy script is in place and made executable, deploying your app is as simple as running:
+
+```sh
+# in ./MyApp
+./bin/deploy
+```
+
+Once deployed, you can open your app up in your browser via:
 
 ```sh
 # in ./MyApp
 heroku open
 ```
 
-To make it easy to deploy, I personally added this script to my project at `bin/deploy` and ran `chmod +x bin/deploy` to make it executable, and then I just run `./bin/deploy` when I want to deploy!
+
 
 That's it!
 
