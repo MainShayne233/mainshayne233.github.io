@@ -104,7 +104,7 @@ main() {
   echo "{}" > build/composer.json
   git add --force build
   git commit -m 'Build for deploy'
-  git push heroku $(git subtree split --prefix build deploy):master --force
+  git push heroku $(git subtree split --prefix build deploy):refs/heads/master --force
   git checkout "${current_branch}"
   git branch -D deploy
 }
@@ -145,8 +145,6 @@ Once deployed, you can open your app up in your browser via:
 # in ./MyApp
 heroku open
 ```
-
-
 
 That's it!
 
